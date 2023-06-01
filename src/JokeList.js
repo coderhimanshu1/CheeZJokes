@@ -4,7 +4,9 @@ import Joke from "./Joke";
 import "./JokeList.css";
 
 class JokeList extends React.Component {
-  static defaultProps = { numJokesToGet: 10 };
+  static defaultProps = {
+    numJokesToGet: 10,
+  };
 
   constructor(props) {
     super(props);
@@ -13,7 +15,6 @@ class JokeList extends React.Component {
     this.vote = this.vote.bind(this);
   }
 
-  /* get jokes if there are no jokes */
   componentDidMount() {
     if (this.state.jokes.length === 0) this.getJokes();
   }
@@ -41,24 +42,17 @@ class JokeList extends React.Component {
     }
   }
 
-  /* empty joke list and then call getJokes */
-
   generateNewJokes() {
-    this.state(this.setState({ jokes: [] }));
+    this.setState({ jokes: [] });
   }
-
-  /* change vote for this id by delta (+1 or -1) */
 
   vote(id, delta) {
-    this.setState({
-      jokes: (allJokes) =>
-        allJokes.map((j) =>
-          j.id === id ? { ...j, votes: j.votes + delta } : j
-        ),
-    });
+    this.setState((allJokes) => ({
+      jokes: allJokes.jokes.map((j) =>
+        j.id === id ? { ...j, votes: j.votes + delta } : j
+      ),
+    }));
   }
-
-  /* render: either loading spinner or list of sorted jokes. */
 
   render() {
     if (this.state.jokes.length) {
